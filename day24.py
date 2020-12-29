@@ -17,9 +17,9 @@ print('Part 1:', len(btiles))
 def flipfloor(btiles0):       # set of current black tiles
     btiles1 = set()           # new set of black tiles after one round
     wtiles = {}               # white tiles with black neighbors, count of black neighbors
-    for (x, y) in btiles0:
+    for p in btiles0:
         cnt = 0
-        for dp in [(x+2, y), (x+1, y+1), (x+1, y-1), (x-2, y), (x-1, y+1), (x-1, y-1)]:
+        for dp in [tuple(map(lambda a, b: a+b, p, q)) for q in dxy.values()]:
             if dp in btiles0:
                 cnt += 1
             else:
@@ -27,7 +27,7 @@ def flipfloor(btiles0):       # set of current black tiles
                     wtiles[dp] = 0
                 wtiles[dp] += 1
         if cnt == 1 or cnt == 2:
-            btiles1.add((x, y))
+            btiles1.add(p)
     for p, cnt in wtiles.items():
         if cnt == 2:
             btiles1.add(p)
